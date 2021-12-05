@@ -4,6 +4,7 @@ import { Row, Col, Image, Button, ListGroup, Card } from 'react-bootstrap'
 import  Rating  from '../components/Rating'
 import axios from 'axios'
 
+
 function ProductScreen({match}) {
     //finding the product to be rendered in Product Screen
     const [product,setProduct] = useState([]);
