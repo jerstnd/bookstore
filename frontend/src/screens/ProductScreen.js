@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, BrowserRouter as Router, Route } from 'react-router-dom'
 import { Row, Col, Image, Button, ListGroup, Card } from 'react-bootstrap'
 import  Rating  from '../components/Rating'
 import  Loader  from '../components/Loader'
 import  Message  from '../components/Message'
 import { listProductsDetails } from '../actions/productActions'
+import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
 
 
-function ProductScreen({match}) {
+function ProductScreen({ match, history }) {
+    const [qty, setQty] = useState(1)
+
     const dispatch = useDispatch()
     const productDetails = useSelector(state => state.productDetails)
     const { loading, error, product } = productDetails
@@ -18,7 +21,17 @@ function ProductScreen({match}) {
         dispatch(listProductsDetails(match.params.id))
     }, [dispatch, match])
 
+    const decrementQty = () => {
+        setQty(qty > 1 ? qty - 1 : qty)
+    }
 
+    const incrementQty = () => {
+        setQty(qty == product.countInStock ? qty : qty + 1)
+    }
+
+    const addToCartHandler = () => {
+        history.push(`/cart/${match.params.id}?qty=${qty}`)
+    }
 
     return (
         <div>
@@ -73,8 +86,21 @@ function ProductScreen({match}) {
                                             </Row>
                                         </ListGroup.Item>
 
+                                        {product.countInStock > 0 && (
+                                            <ListGroup.Item>
+                                                <Row>
+                                                    <Col>Qty:</Col>
+                                                    <Col>
+                                                        <Button variant="light" size="sm" onClick={decrementQty}><AiOutlineMinus /></Button>
+                                                        <span>   {qty}   </span>
+                                                        <Button variant="light" size="sm" onClick={incrementQty}><AiOutlinePlus /></Button>
+                                                    </Col>
+                                                </Row>
+                                            </ListGroup.Item>                                       
+                                        )}
+
                                         <ListGroup.Item>
-                                            <Button className='w-100' disabled={product.countInStock == 0} type='button'>Add to Cart</Button>
+                                            <Button className='w-100' disabled={product.countInStock == 0} type='button' onClick={addToCartHandler}>Add to Cart</Button>
                                         </ListGroup.Item>
                                     </ListGroup>
                                 </Card>
