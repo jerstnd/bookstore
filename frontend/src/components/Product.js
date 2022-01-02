@@ -12,7 +12,7 @@ function Product({product}) {
 
             <Card.Body>
                 <Link to={`/product/${product._id}`}>
-                    <Card.Title sd='div'>
+                    <Card.Title sd='div' className='productname'>
                         {product.name}
                     </Card.Title>
                 </Link>

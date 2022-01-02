@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 import  Message  from '../components/Message'
 import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
+import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
 function CartScreen({ match, location, history }) {
     const productId = match.params.id
@@ -28,6 +29,8 @@ function CartScreen({ match, location, history }) {
         history.push('/login?redirect=shipping')
     }
 
+
+
     return (
         <Row>
             <Col md={8}>
@@ -46,12 +49,12 @@ function CartScreen({ match, location, history }) {
                                         <Link to={`/product/${item.product}`}>{item.name}</Link>
                                     </Col>
 
-                                    <Col md={2}>
+                                    <Col md={3}>
                                         ${item.price}
                                     </Col>
 
-                                    <Col md={3}>
-                                        {/*qty, need to stored at store */}
+                                    <Col md={2}>
+                                        <span>  {item.qty}  </span>
                                     </Col>
 
                                     <Col md={1}>

@@ -15,3 +15,9 @@ h2{
 .rating span{
   margin: 0.1rem;
 }
+
+.productname{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
